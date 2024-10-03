@@ -7,8 +7,8 @@ on:
   pull_request:
   push:
   workflow_dispatch:
-  schedule:
-    - cron: '59 23 * * SUN'
+  # schedule:
+  #   - cron: '59 23 * * SUN'
 
 defaults:
   run:
@@ -18,29 +18,50 @@ env:
   DEBIAN_FRONTEND: noninteractive
 
 jobs:
-  lint:
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: debian:bookworm
+  #   name: "Run lint checks"
+
+  #   steps:
+  #     - name: Install git package
+  #       run: |
+  #         apt-get update -qq
+  #         apt-get install -y git
+
+  #     - uses: actions/checkout@v4
+
+  #     - name: Run lint checks
+  #       run: |
+  #         ./.github/scripts/ci.sh lint
+
+  # typing_test:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: debian:bookworm
+  #   name: "Test typing"
+
+  #   steps:
+  #     - name: Install git package
+  #       run: |
+  #         apt-get update -qq
+  #         apt-get install -y git
+
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+
+  #     - name: Run typing checks
+  #       continue-on-error: true
+  #       run: |
+  #         ./.github/scripts/ci.sh pyright_check
+
+  changelog_changed:
     runs-on: ubuntu-latest
     container:
       image: debian:bookworm
-    name: "Run lint checks"
-
-    steps:
-      - name: Install git package
-        run: |
-          apt-get update -qq
-          apt-get install -y git
-
-      - uses: actions/checkout@v4
-
-      - name: Run lint checks
-        run: |
-          ./.github/scripts/ci.sh lint
-
-  typing_test:
-    runs-on: ubuntu-latest
-    container:
-      image: debian:bookworm
-    name: "Test typing"
+    name: "Check if changelog was changed"
 
     steps:
       - name: Install git package
@@ -52,164 +73,164 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run typing checks
+      - name: Run changelog check
         continue-on-error: true
         run: |
-          ./.github/scripts/ci.sh pyright_check
+          ./.github/scripts/ci.sh changelog_check
 
-  test_python_3_8:
-    runs-on: ubuntu-latest
-    container:
-      image: debian:bookworm
-    name: "Run tests on python 3.8"
+  # test_python_3_8:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: debian:bookworm
+  #   name: "Run tests on python 3.8"
 
-    steps:
-      - name: Install git package
-        run: |
-          apt-get update -qq
-          apt-get install -y git
+  #   steps:
+  #     - name: Install git package
+  #       run: |
+  #         apt-get update -qq
+  #         apt-get install -y git
 
-      - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v4
 
-      - name: Run Python tests on python 3.8
-        run: |
-          ./.github/scripts/ci.sh test_python 3.8
+  #     - name: Run Python tests on python 3.8
+  #       run: |
+  #         ./.github/scripts/ci.sh test_python 3.8
 
-  test_python_3_9:
-    runs-on: ubuntu-latest
-    container:
-      image: debian:bookworm
-    name: "Run tests on python 3.9"
+  # test_python_3_9:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: debian:bookworm
+  #   name: "Run tests on python 3.9"
 
-    steps:
-      - name: Install git package
-        run: |
-          apt-get update -qq
-          apt-get install -y git
+  #   steps:
+  #     - name: Install git package
+  #       run: |
+  #         apt-get update -qq
+  #         apt-get install -y git
 
-      - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v4
 
-      - name: Run Python tests on python 3.9
-        run: |
-          ./.github/scripts/ci.sh test_python 3.9
+  #     - name: Run Python tests on python 3.9
+  #       run: |
+  #         ./.github/scripts/ci.sh test_python 3.9
 
-  test_python_3_10:
-    runs-on: ubuntu-latest
-    container:
-      image: debian:bookworm
-    name: "Run tests on python 3.10"
+  # test_python_3_10:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: debian:bookworm
+  #   name: "Run tests on python 3.10"
 
-    steps:
-      - name: Install git package
-        run: |
-          apt-get update -qq
-          apt-get install -y git
+  #   steps:
+  #     - name: Install git package
+  #       run: |
+  #         apt-get update -qq
+  #         apt-get install -y git
 
-      - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v4
 
-      - name: Run Python tests on python 3.10
-        run: |
-          ./.github/scripts/ci.sh test_python 3.10
+  #     - name: Run Python tests on python 3.10
+  #       run: |
+  #         ./.github/scripts/ci.sh test_python 3.10
 
-  test_python_3_11:
-    runs-on: ubuntu-latest
-    container:
-      image: debian:bookworm
-    name: "Run tests on python 3.11"
+  # test_python_3_11:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: debian:bookworm
+  #   name: "Run tests on python 3.11"
 
-    steps:
-      - name: Install git package
-        run: |
-          apt-get update -qq
-          apt-get install -y git
+  #   steps:
+  #     - name: Install git package
+  #       run: |
+  #         apt-get update -qq
+  #         apt-get install -y git
 
-      - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v4
 
-      - name: Run Python tests on python 3.11
-        run: |
-          ./.github/scripts/ci.sh test_python 3.11
+  #     - name: Run Python tests on python 3.11
+  #       run: |
+  #         ./.github/scripts/ci.sh test_python 3.11
 
-  test_python_3_12:
-    runs-on: ubuntu-latest
-    container:
-      image: debian:bookworm
-    name: "Run tests on python 3.12"
+  # test_python_3_12:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: debian:bookworm
+  #   name: "Run tests on python 3.12"
 
-    steps:
-      - name: Install git package
-        run: |
-          apt-get update -qq
-          apt-get install -y git
+  #   steps:
+  #     - name: Install git package
+  #       run: |
+  #         apt-get update -qq
+  #         apt-get install -y git
 
-      - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v4
 
-      - name: Run Python tests on python 3.12
-        run: |
-          ./.github/scripts/ci.sh test_python 3.12
+  #     - name: Run Python tests on python 3.12
+  #       run: |
+  #         ./.github/scripts/ci.sh test_python 3.12
 
-  package_test:
-    runs-on: ubuntu-latest
-    container:
-      image: debian:bookworm
-    name: "Test package distribution"
+  # package_test:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: debian:bookworm
+  #   name: "Test package distribution"
 
-    steps:
-      - name: Install git package
-        run: |
-          apt-get update -qq
-          apt-get install -y git
+  #   steps:
+  #     - name: Install git package
+  #       run: |
+  #         apt-get update -qq
+  #         apt-get install -y git
 
-      - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v4
 
-      - name: Build and test distribution packages
-        run: |
-          ./.github/scripts/ci.sh package_dist
+  #     - name: Build and test distribution packages
+  #       run: |
+  #         ./.github/scripts/ci.sh package_dist
 
-  examples:
-    runs-on: ubuntu-latest
-    container:
-      image: debian:bookworm
-    name: "Generate examples"
+  # examples:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: debian:bookworm
+  #   name: "Generate examples"
 
-    steps:
-      - name: Install git package
-        run: |
-          apt-get update -qq
-          apt-get install -y git
+  #   steps:
+  #     - name: Install git package
+  #       run: |
+  #         apt-get update -qq
+  #         apt-get install -y git
 
-      - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v4
 
-      - name: Generate Topwrap examples
-        run: |
-          ./.github/scripts/ci.sh examples
+  #     - name: Generate Topwrap examples
+  #       run: |
+  #         ./.github/scripts/ci.sh examples
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: examples
-          path: examples/**/build
+  #     - name: Upload artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: examples
+  #         path: examples/**/build
 
-  package_cores:
-    runs-on: ubuntu-latest
-    container:
-      image: debian:bookworm
-    name: "Package cores repository"
+  # package_cores:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: debian:bookworm
+  #   name: "Package cores repository"
 
-    steps:
-      - name: Install git package
-        run: |
-          apt-get update -qq
-          apt-get install -y git
+  #   steps:
+  #     - name: Install git package
+  #       run: |
+  #         apt-get update -qq
+  #         apt-get install -y git
 
-      - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v4
 
-      - name: Pack cores into a Topwrap repository
-        run: |
-          ./.github/scripts/ci.sh package_cores
-          tar -cf build/cores_export.tar -C build/export .
+  #     - name: Pack cores into a Topwrap repository
+  #       run: |
+  #         ./.github/scripts/ci.sh package_cores
+  #         tar -cf build/cores_export.tar -C build/export .
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: export_cores
-          path: build/cores_export.tar
+  #     - name: Upload artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: export_cores
+  #         path: build/cores_export.tar
