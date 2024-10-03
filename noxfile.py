@@ -290,7 +290,7 @@ def changed_changelog(session: nox.Session) -> None:
         "git",
         "diff",
         "--name-only",
-        "main",
+        "origin/main..HEAD",
         "--",
         changelog_file_name,
         external=True,
