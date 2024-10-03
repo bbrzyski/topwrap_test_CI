@@ -80,7 +80,6 @@ jobs:
         continue-on-error: true
         run: |
           git config --global --add safe.directory "$(pwd)"
-          git fetch origin main
           ./.github/scripts/ci.sh changelog_check
 
   # test_python_3_8:
