@@ -63,6 +63,9 @@ jobs:
       image: debian:bookworm
     name: "Check if changelog was changed"
 
+    # before_script:
+    #   - git config --global --add safe.directory "$(pwd)"
+
     steps:
       - name: Install git package
         run: |
@@ -76,6 +79,7 @@ jobs:
       - name: Run changelog check
         continue-on-error: true
         run: |
+          git fetch origin main
           ./.github/scripts/ci.sh changelog_check
 
   # test_python_3_8:
