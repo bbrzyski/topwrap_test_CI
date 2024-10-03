@@ -291,7 +291,6 @@ def changed_changelog(session: nox.Session) -> None:
         "diff",
         "--name-only",
         "origin/main",
-        "HEAD",
         "--",
         changelog_file_name,
         external=True,
